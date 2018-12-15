@@ -1,0 +1,155 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<ActorStudio.Controllers.VocalBase>
+
+@{
+    ViewBag.Title = "Classical Vocals";
+
+    bool isAdmin = false;
+    if (User.IsInRole("Admin"))
+    {
+        isAdmin = true;
+    }
+}
+<!--
+    <div>
+    Icons made by <a href="https://www.flaticon.com/authors/picol" title="Picol">Picol</a> from <a href="https://www.flaticon.com/"
+    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"
+    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+</div>
+-->
+
+<div class="row" style="height:120px;">
+    <div class="col-md-3">
+        <h2>@ViewBag.Title</h2>
+        <p>(circa 1780 - 1880)</p>
+    </div>
+    <div class="col-md-9">
+        <br />
+        <h4>Announcements</h4>
+        <p>
+            Please review all three songs in the list for the next recital November 25th, 2018.
+            Also, please note my performance on October 26th, 2018 at Columbus Centre 8:00pm
+        </p>
+    </div>
+</div>
+
+
+<br />
+
+<div class="row">
+    <div class="col-md-3">
+        <h3>Teacher</h3>
+        <p>Andrew Kartuzov</p>
+        <img src="../Assets/AndrewProfile.png" style="width:80%;" />
+        <h6>Kartuzov@rogers.ca</h6>
+        <h6>647-449-2476</h6>
+    </div>
+    <div class="col-md-9">
+        <br />
+        <h4>Resources:</h4>
+        <table class="table">
+            <tr>
+                <th>Id</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>Text</th>
+                <th>Image</th>
+                <th>Audio</th>
+                <th>Video</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @{
+                            if (item.txtB == true)
+                            {
+                                <a href="@item.TextUrl" alt="" download="download">
+                                    <img src="../Assets/textDown.png" style="width:20px; " />
+                                </a>
+                            }
+                            else
+                            {
+                                <img src="../Assets/textDownGrey.png" style="width:20px;" />
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            if (item.imageB == true)
+                            {
+                                <a href="@item.PhotoUrl" alt="" download>
+                                    <img src="../Assets/imageDown.png" style="width:20px; " />
+                                </a>
+                            }
+                            else
+                            {
+                                <img src="../Assets/imageDownGrey.png" style="width:20px;" />
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            if (item.audioB == true)
+                            {
+                                <a href="@item.AudioUrl" alt="" download>
+                                    <img src="../Assets/audioDown.png" style="width:20px; " />
+                                </a>
+                            }
+                            else
+                            {
+                                <img src="../Assets/audioDownGrey.png" style="width:20px;" />
+                            }
+                        }
+                    </td>
+
+                    <td>
+                        @{
+                            if (item.videoB == true)
+                            {
+                                <a href="@item.VideoUrl" alt="" download="download">
+                                    <img src="../Assets/videoDown.png" style="width:20px; " />
+                                </a>
+                            }
+                            else
+                            {
+                                <img src="../Assets/videoDownGrey.png" style="width:20px;" />
+                            }
+                        }
+                    </td>
+                    <td>
+
+                        @Html.ActionLink("Details", "Details", new { id = item.Id })
+                        @{
+                            if (isAdmin)
+                            {
+                                @Html.ActionLink(" | Edit |", "Edit", new { id = item.Id })
+
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <p>
+            @{
+                if (isAdmin)
+                {
+                    @Html.ActionLink("Create New", "Create")
+                }
+            }
+        </p>
+    </div>
+</div>
+

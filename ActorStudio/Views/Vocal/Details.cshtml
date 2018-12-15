@@ -1,0 +1,80 @@
+﻿@using Microsoft.AspNet.Identity
+@model ActorStudio.Controllers.VocalBase
+
+@{
+    ViewBag.Title = "Details";
+
+    bool isAdmin = false;
+    if (User.IsInRole("Admin"))
+    {
+        isAdmin = true;
+    }
+}
+
+<h2>Document details</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        @{
+            <dt> @Html.DisplayNameFor(model => model.Title)</dt>
+            <dd> @Html.DisplayFor(model => model.Title) </dd>
+
+            <dt> @Html.DisplayNameFor(model => model.Descr)</dt>
+            <dd> @Html.DisplayFor(model => model.Descr)</dd>
+
+            <dt> Last updated:</dt>
+            <dd> @Html.DisplayFor(model => model.LastModified)</dd>
+
+
+            if (Model.txtB == true)
+            {
+                <dt> Text </dt>
+                <dd> Text area (minimized)</dd>
+            }
+
+            if (Model.imageB == true)
+            {
+                <dt> Image </dt>
+                <dd> <img src="@Model.PhotoUrl" class="img-responsive" style="width: 320px;" /> </dd>
+            }
+
+
+            if (Model.audioB == true)
+            {
+                <dt> Audio </dt>
+                <dd>
+                    <audio controls="controls" id="audio_player" preload="none">
+                        <source src="@Model.AudioUrl" type="@Model.AudioContentType" />
+                        Your browser does not support the audio element.
+                    </audio>
+                </dd>
+            }
+
+
+            if (Model.videoB == true)
+            {
+                <dt> Video</dt>
+                <dd>
+                    <video controls="controls" id="video_player" width="500px" preload="none">
+                        <source src="@Model.VideoUrl" type="@Model.VideoContentType" />
+                        Your browser does not support the audio element.
+                    </video>
+                </dd>
+            }
+
+        }
+
+
+    </dl>
+</div>
+<p>
+    @{ 
+        if (isAdmin) {
+            @Html.ActionLink("Edit |", "Edit", new { id = Model.Id })
+        }
+        
+        @Html.ActionLink("Back to List", "Index")
+    }
+</p>
